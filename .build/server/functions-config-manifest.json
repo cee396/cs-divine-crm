@@ -1,0 +1,1 @@
+{"version":1,"functions":{"/api/auth/logout":{},"/api/auth/me":{},"/api/auth/login":{},"/api/call-logs":{},"/api/dashboard/stats":{},"/api/properties":{},"/api/leads/[id]":{},"/api/csv-import":{},"/api/leads":{},"/api/seed":{}}}

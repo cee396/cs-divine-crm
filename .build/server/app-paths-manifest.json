@@ -1,0 +1,20 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/import/page": "app/import/page.js",
+  "/call-logs/page": "app/call-logs/page.js",
+  "/leads/[id]/page": "app/leads/[id]/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/api/call-logs/route": "app/api/call-logs/route.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/dashboard/stats/route": "app/api/dashboard/stats/route.js",
+  "/api/csv-import/route": "app/api/csv-import/route.js",
+  "/api/leads/route": "app/api/leads/route.js",
+  "/api/properties/route": "app/api/properties/route.js",
+  "/api/seed/route": "app/api/seed/route.js",
+  "/api/leads/[id]/route": "app/api/leads/[id]/route.js",
+  "/leads/page": "app/leads/page.js",
+  "/page": "app/page.js",
+  "/properties/page": "app/properties/page.js"
+}
