@@ -1,0 +1,7 @@
+{
+  "/page": "app/page.js",
+  "/api/metrics/route": "app/api/metrics/route.js",
+  "/api/leads/route": "app/api/leads/route.js",
+  "/upload/page": "app/upload/page.js",
+  "/leads/page": "app/leads/page.js"
+}

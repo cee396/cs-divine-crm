@@ -1,0 +1,281 @@
+// Enterprise Tax Deed CRM Database Schema
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/tax-deed-crm-enterprise/app/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  role         String   @default("USER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  leads        Lead[]
+  callLogs     CallLog[]
+}
+
+model Lead {
+  id                    String   @id @default(cuid())
+  status                String   @default("New Lead")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  assignedToId         String?
+  assignedTo           User?    @relation(fields: [assignedToId], references: [id])
+  
+  // Property Information
+  parcelId             String?
+  propertyAddress      String?
+  propertyCity         String?
+  propertyState        String?
+  propertyZip          String?
+  county               String?
+  propertyType         String?
+  landUse              String?
+  acres                Float?
+  squareFeet           Float?
+  yearBuilt            Int?
+  bedrooms             Int?
+  bathrooms            Float?
+  
+  // Owner Information
+  ownerName            String?
+  ownerAddress         String?
+  ownerCity            String?
+  ownerState           String?
+  ownerZip             String?
+  ownerPhone           String?
+  ownerEmail           String?
+  mailingAddress       String?
+  mailingCity          String?
+  mailingState         String?
+  mailingZip           String?
+  
+  // Tax Information
+  taxesOwed            Float?
+  yearsDelinquent      Int?
+  saleDate             DateTime?
+  certificateNumber    String?
+  bidAmount            Float?
+  redemptionAmount     Float?
+  interestRate         Float?
+  
+  // Assessment Information
+  assessedValue        Float?
+  marketValue          Float?
+  landValue            Float?
+  buildingValue        Float?
+  exemptions           Float?
+  
+  // Geographic Information
+  latitude             Float?
+  longitude            Float?
+  subdivision          String?
+  section              String?
+  township             String?
+  range                String?
+  
+  // FL Counties Specific Fields
+  deedBook             String?
+  deedPage             String?
+  platBook             String?
+  platPage             String?
+  legalDescription     String?
+  zoning               String?
+  floodZone            String?
+  schoolDistrict       String?
+  
+  // Additional Property Details
+  utilities            String?
+  roadAccess           String?
+  waterAccess          String?
+  sewerAccess          String?
+  electricAccess       String?
+  gasAccess            String?
+  internetAccess       String?
+  
+  // Financial Information
+  estimatedValue       Float?
+  repairCosts          Float?
+  marketRent           Float?
+  propertyTaxes        Float?
+  insurance            Float?
+  hoa                  Float?
+  
+  // Lead Tracking
+  leadSource           String?
+  priority             String?   @default("Medium")
+  notes                String?
+  tags                 String[]
+  
+  // Contact Attempts
+  lastContactDate      DateTime?
+  nextFollowUpDate     DateTime?
+  contactAttempts      Int      @default(0)
+  
+  // Additional FL Counties Fields (150+ fields support)
+  field1               String?
+  field2               String?
+  field3               String?
+  field4               String?
+  field5               String?
+  field6               String?
+  field7               String?
+  field8               String?
+  field9               String?
+  field10              String?
+  field11              String?
+  field12              String?
+  field13              String?
+  field14              String?
+  field15              String?
+  field16              String?
+  field17              String?
+  field18              String?
+  field19              String?
+  field20              String?
+  field21              String?
+  field22              String?
+  field23              String?
+  field24              String?
+  field25              String?
+  field26              String?
+  field27              String?
+  field28              String?
+  field29              String?
+  field30              String?
+  field31              String?
+  field32              String?
+  field33              String?
+  field34              String?
+  field35              String?
+  field36              String?
+  field37              String?
+  field38              String?
+  field39              String?
+  field40              String?
+  field41              String?
+  field42              String?
+  field43              String?
+  field44              String?
+  field45              String?
+  field46              String?
+  field47              String?
+  field48              String?
+  field49              String?
+  field50              String?
+  field51              String?
+  field52              String?
+  field53              String?
+  field54              String?
+  field55              String?
+  field56              String?
+  field57              String?
+  field58              String?
+  field59              String?
+  field60              String?
+  field61              String?
+  field62              String?
+  field63              String?
+  field64              String?
+  field65              String?
+  field66              String?
+  field67              String?
+  field68              String?
+  field69              String?
+  field70              String?
+  field71              String?
+  field72              String?
+  field73              String?
+  field74              String?
+  field75              String?
+  field76              String?
+  field77              String?
+  field78              String?
+  field79              String?
+  field80              String?
+  field81              String?
+  field82              String?
+  field83              String?
+  field84              String?
+  field85              String?
+  field86              String?
+  field87              String?
+  field88              String?
+  field89              String?
+  field90              String?
+  field91              String?
+  field92              String?
+  field93              String?
+  field94              String?
+  field95              String?
+  field96              String?
+  field97              String?
+  field98              String?
+  field99              String?
+  field100             String?
+  
+  callLogs             CallLog[]
+  properties           Property[]
+  
+  @@index([status])
+  @@index([county])
+  @@index([ownerName])
+  @@index([createdAt])
+}
+
+model Property {
+  id                   String   @id @default(cuid())
+  leadId               String
+  lead                 Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  address              String
+  city                 String
+  state                String
+  zip                  String
+  county               String
+  
+  propertyType         String?
+  status               String   @default("Active")
+  
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model CallLog {
+  id           String   @id @default(cuid())
+  leadId       String
+  lead         Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  
+  callDate     DateTime @default(now())
+  duration     Int?     // in minutes
+  outcome      String   // Connected, Voicemail, No Answer, Busy, etc.
+  notes        String?
+  followUpDate DateTime?
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@index([leadId])
+  @@index([callDate])
+}
+
+model UploadSession {
+  id              String   @id @default(cuid())
+  filename        String
+  totalRecords    Int
+  successRecords  Int
+  errorRecords    Int
+  status          String   @default("Processing") // Processing, Completed, Failed
+  errors          String?  // JSON string of errors
+  createdAt       DateTime @default(now())
+  completedAt     DateTime?
+}

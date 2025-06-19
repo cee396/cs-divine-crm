@@ -1,0 +1,20 @@
+name: cs-divine-crm
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: cee396/cs-divine-crm
+    branch: main
+    deploy_on_push: true
+  run_command: cd app && npm start
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 3000
+  routes:
+  - path: /
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: "3000"
