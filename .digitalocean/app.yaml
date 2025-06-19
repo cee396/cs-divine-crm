@@ -6,6 +6,7 @@ services:
     repo: cee396/cs-divine-crm
     branch: main
     deploy_on_push: true
+  build_command: cd app && npm install --legacy-peer-deps --ignore-scripts && npm run build
   run_command: cd app && npm start
   environment_slug: node-js
   instance_count: 1
