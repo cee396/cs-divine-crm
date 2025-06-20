@@ -11,6 +11,7 @@ const FIELD_MAPPING: Record<string, string> = {
   'parcel_id': 'parcelId',
   'parcel_number': 'parcelId',
   'parcel': 'parcelId',
+  'apn': 'parcelId',
   'property_address': 'propertyAddress',
   'address': 'propertyAddress',
   'property_city': 'propertyCity',
@@ -21,15 +22,23 @@ const FIELD_MAPPING: Record<string, string> = {
   'zip': 'propertyZip',
   'zipcode': 'propertyZip',
   'county': 'county',
+  'property_county': 'county',
   'property_type': 'propertyType',
   'land_use': 'landUse',
   'acres': 'acres',
+  'land_acreage': 'acres',
   'square_feet': 'squareFeet',
+  'land_square_footage': 'squareFeet',
+  'square_footage': 'squareFeet',
   'year_built': 'yearBuilt',
   'bedrooms': 'bedrooms',
   'bathrooms': 'bathrooms',
   
-  // Owner Information
+  // Owner Information - FL Counties specific
+  'first_name': 'firstName',
+  'last_name': 'lastName',
+  'owner_1_full_name': 'ownerName',
+  'owner_2_full_name': 'field1',
   'owner_name': 'ownerName',
   'owner': 'ownerName',
   'owner_address': 'ownerAddress',
@@ -49,24 +58,32 @@ const FIELD_MAPPING: Record<string, string> = {
   'taxes_owed': 'taxesOwed',
   'amount_owed': 'taxesOwed',
   'tax_amount': 'taxesOwed',
+  'tax_assessed_value': 'assessedValue',
   'years_delinquent': 'yearsDelinquent',
   'sale_date': 'saleDate',
+  'last_market_sale_date': 'saleDate',
   'certificate_number': 'certificateNumber',
   'bid_amount': 'bidAmount',
+  'last_market_sale_price': 'bidAmount',
   'redemption_amount': 'redemptionAmount',
   'interest_rate': 'interestRate',
+  'mortgage_interest_rate': 'interestRate',
   
   // Assessment Information
   'assessed_value': 'assessedValue',
   'market_value': 'marketValue',
+  'total_value': 'marketValue',
   'land_value': 'landValue',
   'building_value': 'buildingValue',
+  'improvement_value': 'buildingValue',
   'exemptions': 'exemptions',
+  'kind_estimate': 'estimatedValue',
   
   // Geographic Information
   'latitude': 'latitude',
   'longitude': 'longitude',
   'subdivision': 'subdivision',
+  'subdivision_name': 'subdivision',
   'section': 'section',
   'township': 'township',
   'range': 'range',
@@ -79,7 +96,26 @@ const FIELD_MAPPING: Record<string, string> = {
   'legal_description': 'legalDescription',
   'zoning': 'zoning',
   'flood_zone': 'floodZone',
-  'school_district': 'schoolDistrict'
+  'school_district': 'schoolDistrict',
+  
+  // Phone numbers - FL Counties has many phone fields
+  'owner_mobile_1': 'ownerPhone',
+  'owner_landline_1': 'ownerPhone',
+  'owner_voip_1': 'ownerPhone',
+  
+  // Additional FL Counties fields - map to extra fields since they don't exist in schema
+  'motivation_score': 'field2',
+  'equity': 'field3',
+  'equity_$': 'field4',
+  'years_of_ownership': 'field5',
+  'owner_occupied_status': 'field6',
+  'potential_absentee': 'field7',
+  'potential_inherited': 'field8',
+  'potential_deceased': 'field9',
+  'potential_divorced': 'field10',
+  'foreclosure_stage': 'field11',
+  'vacant_indicator': 'field12',
+  'financial_distressed': 'field13'
 }
 
 function normalizeColumnName(name: string): string {
@@ -141,7 +177,9 @@ export async function POST(request: NextRequest) {
     }
 
     const text = await file.text()
-    const lines = text.split('\n').filter(line => line.trim())
+    // Remove BOM if present
+    const cleanText = text.replace(/^\uFEFF/, '')
+    const lines = cleanText.split('\n').filter(line => line.trim())
     
     if (lines.length < 2) {
       return NextResponse.json(
@@ -164,8 +202,8 @@ export async function POST(request: NextRequest) {
       
       if (mappedField) {
         columnMapping[index] = mappedField
-      } else if (header.trim()) {
-        // Map to extra fields (field1, field2, etc.)
+      } else if (header.trim() && extraFieldIndex <= 100) {
+        // Map to extra fields (field1, field2, etc.) - limit to field100
         columnMapping[index] = `field${extraFieldIndex}`
         extraFieldIndex++
       }
@@ -198,6 +236,9 @@ export async function POST(request: NextRequest) {
           status: 'New Lead' // All leads default to "New Lead"
         }
 
+        // Store temporary values for combining fields
+        const tempData: any = {}
+        
         // Map values to database fields
         values.forEach((value, index) => {
           const fieldName = columnMapping[index]
@@ -215,11 +256,34 @@ export async function POST(request: NextRequest) {
               leadData[fieldName] = num ? Math.floor(num) : null
             } else if (fieldName === 'saleDate') {
               leadData[fieldName] = parseCSVDate(cleanValue)
+            } else if (fieldName === 'firstName' || fieldName === 'lastName') {
+              // Store first/last names temporarily to combine later
+              tempData[fieldName] = parseCSVValue(cleanValue)
             } else {
               leadData[fieldName] = parseCSVValue(cleanValue)
             }
           }
         })
+        
+        // Combine First Name and Last Name into ownerName if not already set
+        if (!leadData.ownerName && (tempData.firstName || tempData.lastName)) {
+          const firstName = tempData.firstName || ''
+          const lastName = tempData.lastName || ''
+          leadData.ownerName = `${firstName} ${lastName}`.trim()
+        }
+        
+        // If we have phone numbers from multiple fields, prioritize mobile over landline
+        if (!leadData.ownerPhone) {
+          // Look for any phone number in the data
+          for (const [key, value] of Object.entries(leadData)) {
+            if (key.includes('phone') || key.includes('mobile') || key.includes('landline')) {
+              if (value && typeof value === 'string' && value.trim()) {
+                leadData.ownerPhone = value.trim()
+                break
+              }
+            }
+          }
+        }
 
         // Skip if no meaningful data
         if (!leadData.parcelId && !leadData.propertyAddress && !leadData.ownerName) {
