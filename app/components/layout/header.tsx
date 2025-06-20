@@ -27,7 +27,7 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Building2 className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-gray-900">Tax Deed CRM</span>
+              <span className="text-xl font-bold text-gray-900">Cs Divine CRM</span>
             </Link>
           </div>
 

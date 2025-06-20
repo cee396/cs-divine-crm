@@ -8,7 +8,7 @@ import { Toaster } from '@/components/ui/toaster'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Tax Deed CRM - Enterprise Lead Management',
+  title: 'Cs Divine CRM - Enterprise Lead Management',
   description: 'Professional tax deed lead management system',
 }
 
