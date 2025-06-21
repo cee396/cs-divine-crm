@@ -1,1 +1,1 @@
-{"version":1,"functions":{"/api/auth/logout":{},"/api/auth/me":{},"/api/auth/login":{},"/api/call-logs":{},"/api/dashboard/stats":{},"/api/properties":{},"/api/leads/[id]":{},"/api/csv-import":{},"/api/leads":{},"/api/seed":{}}}
+{"version":1,"functions":{"/api/auth/me":{},"/api/auth/logout":{},"/api/call-logs":{},"/api/auth/login":{},"/api/csv-import":{},"/api/dashboard/stats":{},"/api/leads":{},"/api/leads/[id]":{},"/api/properties":{},"/api/seed":{}}}
