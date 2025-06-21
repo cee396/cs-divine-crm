@@ -1,0 +1,15 @@
+
+name: cs-divine-crm
+services:
+- name: web
+  source_dir: /app
+  github:
+    repo: cee396/cs-divine-crm
+    branch: main
+  run_command: npm start
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  build_command: npm ci --legacy-peer-deps && npm run build
+  routes:
+  - path: /
