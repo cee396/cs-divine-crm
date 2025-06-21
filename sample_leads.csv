@@ -1,0 +1,4 @@
+parcel_id,owner_name,property_address,property_city,property_state,property_zip,county,taxes_owed,years_delinquent,assessed_value,owner_phone,owner_email,deed_book,deed_page,zoning,flood_zone
+12-34-56-789,John Smith,123 Main St,Tampa,FL,33601,Hillsborough,2500.50,3,125000,(813) 555-0123,john.smith@email.com,4521,245,R-1,X
+98-76-54-321,Jane Doe,456 Oak Ave,Orlando,FL,32801,Orange,1800.75,2,98000,(407) 555-0456,jane.doe@email.com,3876,156,R-2,AE
+45-67-89-012,Bob Johnson,789 Pine Rd,Jacksonville,FL,32202,Duval,3200.25,4,150000,(904) 555-0789,bob.johnson@email.com,5432,389,C-1,X

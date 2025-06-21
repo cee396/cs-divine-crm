@@ -1,0 +1,1 @@
+{"version":"20241220000000_init","dialect":"postgresql","name":"init","steps":[{"tag":"CreateTable","table":"User"},{"tag":"CreateTable","table":"Lead"},{"tag":"CreateTable","table":"Property"},{"tag":"CreateTable","table":"CallLog"},{"tag":"CreateTable","table":"UploadSession"}]}
