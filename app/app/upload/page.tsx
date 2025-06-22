@@ -188,7 +188,7 @@ export default function UploadPage() {
             <h1 className="text-3xl font-bold text-gray-900">Upload Leads</h1>
           </div>
           <p className="text-gray-600">
-            Import tax deed leads from CSV files. All leads will be automatically marked as "New Lead" status.
+            Import tax deed leads from CSV files. All leads will be automatically marked as &quot;New Lead&quot; status.
           </p>
         </div>
 
@@ -339,7 +339,7 @@ export default function UploadPage() {
           <div className="space-y-3 text-sm text-gray-700">
             <p><strong>Supported Format:</strong> FL Counties CSV format with up to 153+ fields</p>
             <p><strong>File Requirements:</strong> CSV file format (.csv), maximum 50MB</p>
-            <p><strong>Lead Status:</strong> All imported leads will be automatically set to "New Lead" status</p>
+            <p><strong>Lead Status:</strong> All imported leads will be automatically set to &quot;New Lead&quot; status</p>
             <p><strong>Duplicate Handling:</strong> Duplicate records (same parcel ID) will be skipped</p>
             <p><strong>Required Fields:</strong> At minimum, property address or parcel ID should be present</p>
           </div>

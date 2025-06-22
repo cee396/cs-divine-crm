@@ -1,7 +1,12 @@
 {
-  "/page": "app/page.js",
-  "/api/metrics/route": "app/api/metrics/route.js",
-  "/api/leads/route": "app/api/leads/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/health/route": "app/api/health/route.js",
+  "/calls/page": "app/calls/page.js",
   "/upload/page": "app/upload/page.js",
-  "/leads/page": "app/leads/page.js"
+  "/page": "app/page.js",
+  "/api/call-logs/route": "app/api/call-logs/route.js",
+  "/api/metrics/route": "app/api/metrics/route.js",
+  "/leads/page": "app/leads/page.js",
+  "/api/upload-csv/route": "app/api/upload-csv/route.js",
+  "/api/leads/route": "app/api/leads/route.js"
 }

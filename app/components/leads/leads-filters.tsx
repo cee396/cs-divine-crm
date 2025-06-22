@@ -135,7 +135,7 @@ export default function LeadsFilters({ filters, onFiltersChange, totalCount }: F
           )}
           {filters.search && (
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              Search: "{filters.search}"
+              Search: &quot;{filters.search}&quot;
             </span>
           )}
           {filters.sort !== 'recent' && (

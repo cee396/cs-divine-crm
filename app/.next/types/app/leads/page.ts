@@ -1,4 +1,4 @@
-// File: /home/ubuntu/tax-deed-crm-enterprise/app/app/leads/page.tsx
+// File: /home/ubuntu/cs-divine-crm/app/app/leads/page.tsx
 import * as entry from '../../../../app/leads/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

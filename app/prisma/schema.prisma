@@ -1,4 +1,4 @@
-// Enterprise Tax Deed CRM Database Schema
+// Enterprise Cs Divine CRM Database Schema
 generator client {
     provider = "prisma-client-js"
     binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]

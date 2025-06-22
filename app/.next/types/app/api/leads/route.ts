@@ -1,4 +1,4 @@
-// File: /home/ubuntu/tax-deed-crm-enterprise/app/app/api/leads/route.ts
+// File: /home/ubuntu/cs-divine-crm/app/app/api/leads/route.ts
 import * as entry from '../../../../../app/api/leads/route.js'
 import type { NextRequest } from 'next/server.js'
 
