@@ -1,0 +1,54 @@
+{
+  "name": "divinecrm-app",
+  "region": "nyc",
+  "services": [
+    {
+      "name": "cs-divine-crm",
+      "environment_slug": "node-js",
+      "instance_count": 1,
+      "instance_size_slug": "apps-s-1vcpu-1gb",
+      "http_port": 3000,
+      "github": {
+        "repo": "cee396/cs-divine-crm",
+        "branch": "master",
+        "deploy_on_push": true
+      },
+      "source_dir": "/app",
+      "build_command": "npm ci && npm run build",
+      "run_command": "npm start",
+      "envs": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": "3000"
+        },
+        {
+          "key": "NEXTAUTH_URL",
+          "value": "https://divinecrm-app.ondigitalocean.app"
+        },
+        {
+          "key": "NEXTAUTH_SECRET",
+          "value": "your-nextauth-secret-here"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "your-database-url-here"
+        }
+      ]
+    }
+  ],
+  "features": [
+    "buildpack-stack=ubuntu-22"
+  ],
+  "alerts": [
+    {
+      "rule": "DEPLOYMENT_FAILED"
+    },
+    {
+      "rule": "DOMAIN_FAILED"
+    }
+  ]
+}
