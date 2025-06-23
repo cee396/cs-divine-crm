@@ -4,7 +4,7 @@ services:
   source_dir: /app
   github:
     repo: cee396/cs-divine-crm
-    branch: main
+    branch: master
     deploy_on_push: true
   build_command: npm ci --legacy-peer-deps && npm run build
   run_command: npm start
@@ -19,3 +19,9 @@ services:
     value: production
   - key: PORT
     value: "3000"
+  - key: DATABASE_URL
+    value: "${DATABASE_URL}"
+  - key: NEXTAUTH_URL
+    value: "${NEXTAUTH_URL}"
+  - key: NEXTAUTH_SECRET
+    value: "${NEXTAUTH_SECRET}"
