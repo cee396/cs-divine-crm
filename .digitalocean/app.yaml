@@ -1,7 +1,7 @@
 name: cs-divine-crm
 services:
 - name: web
-  source_dir: /app
+  source_dir: /
   github:
     repo: cee396/cs-divine-crm
     branch: master
